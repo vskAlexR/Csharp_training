@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace addressbook_web_tests
 {
-    class ContactData
+    public class ContactData
     {
         private string firstName;
         private string lastName = "";
-        private string middleName = "";
         private string mobileNumber = "";
 
         public ContactData(string firstname)
