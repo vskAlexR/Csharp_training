@@ -18,5 +18,14 @@ namespace addressbook_web_tests
             contact.MobileNumber = "777";
             app.Contacts.Create(contact);
         }
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData contact = new ContactData("");
+            contact.LastName = "";
+            contact.MobileNumber = "";
+            app.Contacts.Create(contact);
+        }
     }
 }
