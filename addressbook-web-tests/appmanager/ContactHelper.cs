@@ -26,10 +26,10 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper Modify(int p, ContactData newData)
+        public ContactHelper Modify(int id, ContactData newData)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(p);
+            SelectContact(id);
             InitContactModification();
             FillContactForm(newData);
             SubmitContactModification();
@@ -37,10 +37,10 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper Remove(int j)
+        public ContactHelper Remove(int id)
         {
             manager.Navigator.GoToHomePage();
-            SelectContact(j);
+            SelectContact(id);
             RemoveContact();
             CloseContactAlert();
             manager.Navigator.OpenToHomePage();
@@ -60,6 +60,9 @@ namespace addressbook_web_tests
             driver.FindElement(By.Name("lastname")).Click();
             driver.FindElement(By.Name("lastname")).Clear();
             driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+            driver.FindElement(By.Name("mobile")).Click();
+            driver.FindElement(By.Name("mobile")).Clear();
+            driver.FindElement(By.Name("mobile")).SendKeys(contact.MobileNumber);
             return this;
         }
 
@@ -82,7 +85,7 @@ namespace addressbook_web_tests
 
         public ContactHelper SelectContact(int id)
         {
-            driver.FindElement(By.XPath("//*[@id='maintable']/tbody/tr/td[" + id + "]/input")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + id + "]")).Click();
             return this;
         }
 

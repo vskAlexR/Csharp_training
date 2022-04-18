@@ -17,7 +17,7 @@ namespace addressbook_web_tests
             newData.LastName = "bbba";
             newData.MobileNumber = "7778";
 
-            app.Contacts.Modify(1, newData);
+            app.Contacts.Modify(2, newData);
         }
     }
 }
