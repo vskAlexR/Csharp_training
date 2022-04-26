@@ -52,6 +52,7 @@ namespace addressbook_web_tests
             driver.FindElement(By.LinkText("add new")).Click();
             return this;
         }
+
         public ContactHelper FillContactForm(ContactData contact)
         {
             Type(By.Name("firstname"), contact.FirstName    );
@@ -92,6 +93,13 @@ namespace addressbook_web_tests
         {
             driver.SwitchTo().Alert().Accept();
             return this;
+        }
+        public void CreateIfContactNotExist(ContactData contact)
+        {
+            if (!IsElementPresent(By.XPath("//img[@alt='Edit']")))
+            {
+                Create(contact);
+            }
         }
 
     }

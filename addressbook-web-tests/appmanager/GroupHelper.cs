@@ -92,5 +92,12 @@ namespace addressbook_web_tests
             driver.FindElement(By.Name("edit")).Click();
             return this;
         }
+        public void CreateIfGroupNotExist(GroupData group)
+        {
+            if (!IsElementPresent(By.XPath("//input[@name='selected[]")))
+            {
+                Create(group);
+            }
+        }
     }
 }

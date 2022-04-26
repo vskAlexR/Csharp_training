@@ -20,6 +20,12 @@ namespace addressbook_web_tests
             newData.Footer = "qqq";
 
             app.Groups.Modify(1, newData);
+
+            GroupData group = new GroupData("zzz2");
+            group.Header = "yyy2";
+            group.Footer = "qqq2";
+
+            app.Groups.CreateIfGroupNotExist(group);
         }
     }
 }

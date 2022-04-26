@@ -14,6 +14,12 @@ namespace addressbook_web_tests
         [Test]
         public void GroupRemovalTest()
         {
+            GroupData group = new GroupData("zzz3");
+            group.Header = "yyy3";
+            group.Footer = "qqq3";
+
+            app.Groups.CreateIfGroupNotExist(group);
+
             app.Groups.Remove(1);
         }
     }
