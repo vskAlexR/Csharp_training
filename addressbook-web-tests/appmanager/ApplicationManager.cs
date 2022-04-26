@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Threading;
+
 
 
 namespace addressbook_web_tests
@@ -20,13 +22,12 @@ namespace addressbook_web_tests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
-
-
-        public ApplicationManager()
+        private ApplicationManager()
         {
             driver = new FirefoxDriver();
-            baseURL = "http://localhost/addressbook";
+            baseURL = "http://localhost";
 
             loginHelper = new LoginHelper(this);
             navigationHelper = new NavigationHelper(this, baseURL);
@@ -43,7 +44,7 @@ namespace addressbook_web_tests
             }
         }
 
-        public void Stop()
+        ~ApplicationManager()
         {
             try
             {
@@ -53,6 +54,16 @@ namespace addressbook_web_tests
             {
                 // Ignore errors if unable to close the browser
             }
+        }
+        public static ApplicationManager GetInstance()
+        {
+            if (!app.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+                app.Value = newInstance;
+                newInstance.Navigator.GoToHomePage();
+            }
+            return app.Value;
         }
 
         public LoginHelper Auth
