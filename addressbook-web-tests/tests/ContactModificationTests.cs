@@ -14,17 +14,17 @@ namespace addressbook_web_tests
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newData = new ContactData("aaab");
-            newData.LastName = "bbba";
-            newData.MobileNumber = "7778";
-
-            app.Contacts.Modify(2, newData);
-
             ContactData contact = new ContactData("aaab2");
             contact.LastName = "bbba2";
             contact.MobileNumber = "77782";
 
             app.Contacts.CreateIfContactNotExist(contact);
+
+            ContactData newData = new ContactData("aaab");
+            newData.LastName = "bbba";
+            newData.MobileNumber = "7778";
+
+            app.Contacts.Modify(2, newData);
         }
     }
 }

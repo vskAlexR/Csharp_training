@@ -15,17 +15,17 @@ namespace addressbook_web_tests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData newData = new GroupData("zzz");
-            newData.Header = "yyy";
-            newData.Footer = "qqq";
-
-            app.Groups.Modify(1, newData);
-
             GroupData group = new GroupData("zzz2");
             group.Header = "yyy2";
             group.Footer = "qqq2";
 
             app.Groups.CreateIfGroupNotExist(group);
+
+            GroupData newData = new GroupData("zzz");
+            newData.Header = "yyy";
+            newData.Footer = "qqq";
+
+            app.Groups.Modify(1, newData);
         }
     }
 }
