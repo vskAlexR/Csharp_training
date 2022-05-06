@@ -25,7 +25,15 @@ namespace addressbook_web_tests
             newData.Header = "yyy";
             newData.Footer = "qqq";
 
-            app.Groups.Modify(1, newData);
+            List<GroupData> oldGroups = app.Groups.GetGroupLists();
+
+            app.Groups.Modify(0, newData);
+
+            List<GroupData> newGroups = app.Groups.GetGroupLists();
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }
