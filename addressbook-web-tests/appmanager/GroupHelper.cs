@@ -123,5 +123,9 @@ namespace addressbook_web_tests
         {
             return driver.FindElements(By.CssSelector("span.group")).Count;
         }
+        public bool IsGroupExist(int id)
+        {
+            return IsElementPresent(By.XPath("//div[@id='content']/form/span[" + ( id + 1 ) + "]/input"));
+        }
     }
 }

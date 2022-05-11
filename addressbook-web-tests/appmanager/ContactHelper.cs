@@ -30,7 +30,7 @@ namespace addressbook_web_tests
         {
             manager.Navigator.GoToHomePage();
             SelectContact(id);
-            InitContactModification();
+            InitContactModification(id);
             FillContactForm(newData);
             SubmitContactModification();
             manager.Navigator.ReturnToHomePage();
@@ -72,7 +72,7 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper InitContactModification()
+        public ContactHelper InitContactModification(int id)
         {
             driver.FindElement(By.XPath("//img[@alt='Edit']")).Click();
             return this;
@@ -80,7 +80,7 @@ namespace addressbook_web_tests
 
         public ContactHelper SelectContact(int id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + id + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + id+1 + "]")).Click();
             return this;
         }
 
@@ -100,6 +100,26 @@ namespace addressbook_web_tests
             {
                 Create(contact);
             }
+        }
+        public bool IsContactExist(int id)
+        {
+            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + ( id + 2 ) + "]/td/input"));
+        }
+
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.OpenToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr"));
+            foreach (IWebElement element in elements)
+            {
+                if (element.GetAttribute("name") == "entry")
+                {
+                    List<IWebElement> tds = element.FindElements(By.CssSelector("td")).ToList();
+                    contacts.Add(new ContactData(tds[2].Text, tds[1].Text));
+                }
+            }
+            return contacts;
         }
 
     }

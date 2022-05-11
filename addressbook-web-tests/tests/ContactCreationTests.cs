@@ -3,6 +3,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
+
+
 
 namespace addressbook_web_tests
 {
@@ -17,7 +22,15 @@ namespace addressbook_web_tests
             ContactData contact = new ContactData("aaa");
             contact.LastName = "bbb";
             contact.MobileNumber = "777";
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
             app.Contacts.Create(contact);
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts.Add(contact);
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]

@@ -27,8 +27,15 @@ namespace addressbook_web_tests
 
             List<GroupData> oldGroups = app.Groups.GetGroupLists();
 
-            app.Groups.Modify(0, newData);
-
+            if (app.Groups.IsGroupExist(0))
+            {
+                app.Groups.Modify(0, newData);
+            }
+            else
+            {
+                app.Groups.Create(group);
+                app.Groups.Modify(0, newData);
+            }
             List<GroupData> newGroups = app.Groups.GetGroupLists();
             oldGroups[0].Name = newData.Name;
             oldGroups.Sort();

@@ -20,12 +20,17 @@ namespace addressbook_web_tests
             group.Header = "yyy3";
             group.Footer = "qqq3";
 
-            app.Groups.CreateIfGroupNotExist(group);
-
             List<GroupData> oldGroups = app.Groups.GetGroupLists();
 
-            app.Groups.Remove(0);
-
+            if (app.Groups.IsGroupExist(0))
+            {
+                app.Groups.Remove(0);
+            }
+            else
+            {
+                app.Groups.Create(group);
+                app.Groups.Remove(0);
+            }
             List<GroupData> newGroups = app.Groups.GetGroupLists();
 
             oldGroups.RemoveAt(0);

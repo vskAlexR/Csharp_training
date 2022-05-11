@@ -24,7 +24,24 @@ namespace addressbook_web_tests
             newData.LastName = "bbba";
             newData.MobileNumber = "7778";
 
-            app.Contacts.Modify(2, newData);
+            List<ContactData> oldContacts = app.Contacts.GetContactList();
+
+            if (app.Contacts.IsContactExist(0))
+            {
+                app.Contacts.Modify(0, newData);
+            }
+            else
+            {
+                app.Contacts.Create(contact);
+                app.Contacts.Modify(0, newData);
+            }
+
+            List<ContactData> newContacts = app.Contacts.GetContactList();
+            oldContacts[0].FirstName = newData.FirstName;
+            oldContacts[0].LastName = newData.LastName;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

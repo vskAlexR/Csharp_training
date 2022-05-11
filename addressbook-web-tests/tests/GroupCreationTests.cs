@@ -60,10 +60,7 @@ namespace addressbook_web_tests
             app.Groups.Create(group);
 
             List<GroupData> newGroups = app.Groups.GetGroupLists();
-            oldGroups.Add(group);
-            oldGroups.Sort();
-            newGroups.Sort();
-            Assert.AreEqual(oldGroups, newGroups);
+            Assert.AreEqual(oldGroups.Count, newGroups.Count);
         }
     }
 }
