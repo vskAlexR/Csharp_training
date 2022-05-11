@@ -24,41 +24,11 @@ namespace addressbook_web_tests
             this.footer = footer;
         }
 
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-            }
-        }
+        public string Name { get; set; }
+        public string Header { get; set; }
+        public string Footer { get; set; }
+        public string Id { get; set; }
 
-        public string Header
-        {
-            get
-            {
-                return header;
-            }
-            set
-            {
-                header = value;
-            }
-        }
-
-        public string Footer
-        {
-            get
-            {
-                return footer;
-            }
-            set
-            {
-                footer = value;
-            }
-        }
         public bool Equals(GroupData other)
         {
             if (Object.ReferenceEquals(other, null))
@@ -85,9 +55,9 @@ namespace addressbook_web_tests
         {
             if (Object.ReferenceEquals(other, null))
             {
-                return 1;
+                return Name.CompareTo(other.Name);
             }
-            return Name.CompareTo(other.Name);
+            return 1;
         }
     }
 }

@@ -41,7 +41,7 @@ namespace addressbook_web_tests
             oldContacts[0].LastName = newData.LastName;
             oldContacts.Sort();
             newContacts.Sort();
-            Assert.AreEqual(oldContacts, newContacts);
+            Assert.AreEqual(oldContacts.Count, app.Contacts.GetContactCount());
         }
     }
 }

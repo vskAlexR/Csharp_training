@@ -25,12 +25,19 @@ namespace addressbook_web_tests
             else
             {
                 app.Contacts.Create(contact);
+                oldContacts.Add(contact);
                 app.Contacts.Remove(0);
             }
+            Assert.AreEqual(oldContacts.Count - 1, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
+            ContactData toBeRemoved = oldContacts[0];
+
             oldContacts.RemoveAt(0);
-            Assert.AreEqual(oldContacts, newContacts);
+            foreach (ContactData contactData in newContacts)
+            {
+                Assert.AreNotEqual(contactData.Id, toBeRemoved.Id);
+            }
         }
     }
 }

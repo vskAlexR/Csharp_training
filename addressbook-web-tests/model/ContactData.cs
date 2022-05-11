@@ -54,40 +54,15 @@ namespace addressbook_web_tests
             return this.ToString().CompareTo(other.ToString());
         }
 
-        public string FirstName
-        {
-            get
-            {
-                return firstName;
-            }
-            set
-            {
-                firstName = value;
-            }
-        }
+        public string FirstName { get; set; }
 
-        public string LastName
-        {
-            get
-            {
-                return lastName;
-            }
-            set
-            {
-                lastName = value;
-            }
-        }
 
-        public string MobileNumber
-        {
-            get
-            {
-                return mobileNumber;
-            }
-            set
-            {
-                mobileNumber = value;
-            }
-        }
+        public string LastName { get; set; }
+
+
+        public string MobileNumber { get; set; }
+        public string Id { get; set; }
+
+
     }
 }
