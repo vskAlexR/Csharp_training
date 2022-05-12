@@ -12,6 +12,7 @@ namespace addressbook_web_tests
         private string lastName = "";
         private string mobileNumber = "";
         private string allPhones;
+        private string allEmails;
 
 
         public ContactData(string firstName)
@@ -104,6 +105,32 @@ namespace addressbook_web_tests
                 return "";
             }
             return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+        }
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (ClenupEmail(Email) + ClenupEmail(Email2) + ClenupEmail(Email3)).Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
+            }
+        }
+        private string ClenupEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return email.Replace(" ", "") + "\r\n";
         }
     }
 }
