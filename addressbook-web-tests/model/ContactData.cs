@@ -56,7 +56,7 @@ namespace addressbook_web_tests
 
         public override string ToString()
         {
-            return FirstName + "_" + LastName;
+            return "Firstname = " + FirstName + ", Lastname = " + LastName;
         }
 
         public int CompareTo(ContactData other)
