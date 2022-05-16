@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
 
 namespace addressbook_web_tests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstName;
-        private string lastName = "";
-        private string mobileNumber = "";
+        private string lastName;
+        private string mobileNumber;
         private string allPhones;
         private string allEmails;
+        private string allContactInfo;
+        private string fullName;
 
+        public ContactData() { }
 
         public ContactData(string firstName)
         {
@@ -64,11 +69,7 @@ namespace addressbook_web_tests
         }
 
         public string FirstName { get; set; }
-
-
         public string LastName { get; set; }
-
-
         public string MobileNumber { get; set; }
         public string Id { get; set; }
         public string Address { get; set; }
@@ -78,6 +79,15 @@ namespace addressbook_web_tests
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
+        public string NickName { get; set; }
+        public string Title { get; set; }
+        public string Company { get; set; }
+        public string Home { get; set; }
+
+        public string Mobile { get; set; }
+
+        public string Work { get; set; }
+
 
         public string AllPhones
         {
@@ -104,7 +114,7 @@ namespace addressbook_web_tests
             {
                 return "";
             }
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(phone, "[ \\-()]", "") + "\r\n";
         }
         public string AllEmails
         {
@@ -131,6 +141,50 @@ namespace addressbook_web_tests
                 return "";
             }
             return email.Replace(" ", "") + "\r\n";
+        }
+        public string AllContactInfo
+        {
+            get
+            {
+                if (allContactInfo != null)
+                {
+                    return allContactInfo;
+                }
+                else
+                {
+                    return FirstName + " " + LastName + "\r\n"
+                        + NickName + "\r\n"
+                        + Title + "\r\n"
+                        + Company + "\r\n"
+                        + Address + "\r\n\r\n"
+                        + "H: " + HomePhone + "\r\n"
+                        + "M: " + MobilePhone + "\r\n"
+                        + "W: " + WorkPhone + "\r\n"
+                        + Email + "\r\n"
+                        + Email2 + "\r\n"
+                        + Email3 + "\r\n";
+                }
+            }
+            set { allContactInfo = value; }
+        }
+
+        public string FullName
+        {
+            get
+            {
+                if (fullName != null)
+                {
+                    return fullName;
+                }
+                else
+                {
+                    return (firstName + " " + lastName).Trim();
+                }
+            }
+            set
+            {
+                fullName = value;
+            }
         }
     }
 }
