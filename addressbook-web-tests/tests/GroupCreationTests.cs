@@ -3,7 +3,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.IO;
 using System.Collections.Generic;
+using System.Xml;
+using Newtonsoft.Json;
+using System.Xml.Serialization;
+using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
+
 
 
 namespace addressbook_web_tests
@@ -13,12 +20,10 @@ namespace addressbook_web_tests
 
     {
 
-        [Test]
-        public void GroupCreationTest()
+
+        [Test, TestCaseSource("GroupDataFromExcelFile")]
+        public void GroupCreationTest(GroupData group)
         {
-            GroupData group = new GroupData("aaa");
-            group.Header = "ddd";
-            group.Footer = "fff";
 
             List<GroupData> oldGroups = app.Groups.GetGroupLists();
 
@@ -31,6 +36,11 @@ namespace addressbook_web_tests
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
 
+        }
+        public static IEnumerable<GroupData> GroupDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<GroupData>>(
+                File.ReadAllText(@"groups.json"));
         }
 
         [Test]
@@ -80,21 +90,51 @@ namespace addressbook_web_tests
             return groups;
 
         }
-        [Test, TestCaseSource("RandomGroupDataProvider")]
-        public void GroupCreationTest(GroupData group)
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
         {
+            List<GroupData> groups = new List<GroupData>();
 
-            List<GroupData> oldGroups = app.Groups.GetGroupLists();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (var l in lines)
+            {
+                var parts = l.Split(',');
+                groups.Add(new GroupData(parts[0])
+                {
+                    Header = parts[1],
+                    Footer = parts[2]
+                });
+            }
 
-            app.Groups.Create(group);
-            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
-
-            List<GroupData> newGroups = app.Groups.GetGroupLists();
-            oldGroups.Add(group);
-            oldGroups.Sort();
-            newGroups.Sort();
-            Assert.AreEqual(oldGroups, newGroups);
-
+            return groups;
         }
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            return (List<GroupData>)
+                new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(@"groups.xml"));
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromExcelFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+
+            Excel.Application app = new Excel.Application();
+            Excel.Workbook workbook = app.Workbooks.Open(Path.Combine(Directory.GetCurrentDirectory(), @"groups.xlsx"));
+            Excel.Worksheet worksheet = (Excel.Worksheet)workbook.ActiveSheet;
+            Excel.Range range = worksheet.UsedRange;
+            for (int i = 1; i <= range.Rows.Count; i++)
+            {
+                groups.Add(new GroupData()
+                {
+                    Name = (string)range.Cells[i, 1],
+                    Header = (string)range.Cells[i, 2],
+                    Footer = (string)range.Cells[i, 3]
+                });
+            }
+            workbook.Close();
+            app.Quit();
+
+            return groups;
+        }
+
     }
-}
+    }
