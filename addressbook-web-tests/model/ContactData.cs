@@ -12,6 +12,10 @@ namespace addressbook_web_tests
         private string lastName = "";
         private string mobileNumber = "";
 
+        public ContactData()
+        {
+
+        }
         public ContactData(string firstName)
         {
             this.firstName = firstName;
@@ -51,7 +55,11 @@ namespace addressbook_web_tests
             {
                 return 1;
             }
-            return this.ToString().CompareTo(other.ToString());
+            if (this.LastName != other.LastName)
+            {
+                return LastName.CompareTo(other.LastName);
+            }
+            return FirstName.CompareTo(other.FirstName);
         }
 
         public string FirstName

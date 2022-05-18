@@ -19,7 +19,8 @@ namespace addressbook_web_tests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData("aaa");
+            ContactData contact = new ContactData();
+            contact.FirstName = "aaa";
             contact.LastName = "bbb";
             contact.MobileNumber = "777";
             List<ContactData> oldContacts = app.Contacts.GetContactList();

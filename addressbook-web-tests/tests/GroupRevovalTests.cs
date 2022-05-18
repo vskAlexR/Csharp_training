@@ -16,7 +16,8 @@ namespace addressbook_web_tests
         [Test]
         public void GroupRemovalTest()
         {
-            GroupData group = new GroupData("zzz3");
+            GroupData group = new GroupData();
+            group.Name = "sss3";
             group.Header = "yyy3";
             group.Footer = "qqq3";
 
