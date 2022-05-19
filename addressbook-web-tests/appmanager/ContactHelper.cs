@@ -218,10 +218,9 @@ namespace addressbook_web_tests
             OpenContactDetails(id);
             var rows = driver.FindElement(By.Id("content")).Text;
 
-            string allContactInfo = driver.FindElement(By.Id("content")).GetAttribute("innerText").Replace("\r\n\r\n\r\n\r\n", "").
-               Replace("h: ", "").Replace("m: ", "").Replace("w: ", "").Trim();
+            string allContactInfo = driver.FindElement(By.Id("content")).GetAttribute("innerText").Replace("\r\n", "");
 
-            string fullName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text;
+            string fullName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text.Replace("\r\n", "");
 
             return new ContactData(allContactInfo)
             {

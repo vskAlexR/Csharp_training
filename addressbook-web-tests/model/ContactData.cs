@@ -140,7 +140,7 @@ namespace addressbook_web_tests
             {
                 return "";
             }
-            return email.Replace(" ", "") + "\r\n";
+            return email.Replace(" ", "");
         }
         public string AllContactInfo
         {
@@ -152,20 +152,49 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return FirstName + " " + LastName + "\r\n"
-                        + NickName + "\r\n"
-                        + Title + "\r\n"
-                        + Company + "\r\n"
-                        + Address + "\r\n\r\n"
-                        + "H: " + HomePhone + "\r\n"
-                        + "M: " + MobilePhone + "\r\n"
-                        + "W: " + WorkPhone + "\r\n"
-                        + Email + "\r\n"
-                        + Email2 + "\r\n"
-                        + Email3 + "\r\n";
+                    return FullName
+                        + CleanUpData(NickName)
+                        + CleanUpData(Title)
+                        + CleanUpData(Company)
+                        + CleanUpData(Address)
+                        + CleanUpDataPhones(HomePhone)
+                        + CleanUpDataPhones(MobilePhone)
+                        + CleanUpDataPhones(WorkPhone)
+                        + AllEmails;
                 }
             }
             set { allContactInfo = value; }
+        }
+        private string CleanUpData(string data)
+        {
+            if (data == null || data == "")
+            {
+                return "";
+            }
+
+            return data;
+        }
+        private string CleanUpDataPhones(string phone)
+        {
+            if (phone == null || phone == "")
+            { 
+                return "";
+            }
+            else
+                if (phone == HomePhone)
+                {
+                    return "H: " + phone;
+                }
+                else if (phone == MobilePhone)
+                {
+                    return "M: " + phone;
+                }
+                else if (phone == WorkPhone)
+                {
+                    return "W: " + phone;
+                }
+
+            return phone;
         }
 
         public string FullName

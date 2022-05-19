@@ -25,10 +25,10 @@ namespace addressbook_web_tests
         [Test]
         public void TestContactDetails()
         {
-            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(13);
-            ContactData fromDetails = app.Contacts.GetContactInformationFromDetails(13);
+            ContactData fromForm = app.Contacts.GetContactInformationFromEditForm(0);
+            ContactData fromDetails = app.Contacts.GetContactInformationFromDetails(0);
 
-            Assert.AreEqual(fromDetails.AllContactInfo.ToLower(), fromForm.AllContactInfo.ToLower());
+            Assert.AreEqual(fromDetails.AllContactInfo, fromForm.AllContactInfo);
             Assert.AreEqual(fromDetails.FullName, fromForm.FullName);
 
         }
