@@ -6,6 +6,10 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using System.IO;
+
 
 
 
@@ -15,21 +19,32 @@ namespace addressbook_web_tests
     public class ContactCreationTests : AuthTestBase
 
     {
-
-        [Test]
-        public void ContactCreationTest()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contact = new ContactData();
-            contact.FirstName = "abcdtest";
-            contact.LastName = "bbbtest";
-            contact.MobileNumber = "777";
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(10), GenerateRandomString(10))
+                {
+                });
+            }
+            return contacts;
+        }
+
+        [Test, TestCaseSource("ContactDataFromXmlFile")]
+        public void ContactCreationTest(ContactData contact)
+        {
+
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Create(contact);
             Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
+            List<ContactData> newContacts = app.Contacts.GetContactList();
 
             oldContacts.Add(contact);
             oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
 
         [Test]
@@ -72,17 +87,7 @@ namespace addressbook_web_tests
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
         }
-        public static IEnumerable<ContactData> RandomContactDataProvider()
-        {
-            List<ContactData> contacts = new List<ContactData>();
-            for (int i = 0; i < 5; i++)
-            {
-                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
-                {
-                });
-            }
-            return contacts;
-        }
+
         [Test, TestCaseSource("RandomContactDataProvider")]
         public void ContactCreationTest2(ContactData contact)
         {
@@ -95,6 +100,17 @@ namespace addressbook_web_tests
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
+        }
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
+        {
+            return (List<ContactData>)
+                new XmlSerializer(typeof(List<ContactData>)).Deserialize(new StreamReader(@"contacts.xml"));
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+                File.ReadAllText(@"contacts.json"));
         }
 
 
