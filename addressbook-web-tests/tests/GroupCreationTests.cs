@@ -21,7 +21,7 @@ namespace addressbook_web_tests
     {
 
 
-        [Test, TestCaseSource("GroupDataFromExcelFile")]
+        [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTest(GroupData group)
         {
 
@@ -36,11 +36,6 @@ namespace addressbook_web_tests
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
 
-        }
-        public static IEnumerable<GroupData> GroupDataFromJsonFile()
-        {
-            return JsonConvert.DeserializeObject<List<GroupData>>(
-                File.ReadAllText(@"groups.json"));
         }
 
         [Test]
@@ -107,11 +102,6 @@ namespace addressbook_web_tests
 
             return groups;
         }
-        public static IEnumerable<GroupData> GroupDataFromXmlFile()
-        {
-            return (List<GroupData>)
-                new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(@"groups.xml"));
-        }
 
         public static IEnumerable<GroupData> GroupDataFromExcelFile()
         {
@@ -134,6 +124,17 @@ namespace addressbook_web_tests
             app.Quit();
 
             return groups;
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            return (List<GroupData>)new XmlSerializer(typeof(List<GroupData>))
+                 .Deserialize(new StreamReader(@"groups.xml"));
+        }
+        public static IEnumerable<GroupData> GroupDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<GroupData>>(
+               File.ReadAllText(@"groups.json"));
         }
 
     }
