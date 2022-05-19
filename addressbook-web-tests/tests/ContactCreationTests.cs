@@ -84,7 +84,7 @@ namespace addressbook_web_tests
             return contacts;
         }
         [Test, TestCaseSource("RandomContactDataProvider")]
-        public void ContactCreationTest(ContactData contact)
+        public void ContactCreationTest2(ContactData contact)
         {
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 

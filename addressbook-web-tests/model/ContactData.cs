@@ -22,19 +22,19 @@ namespace addressbook_web_tests
 
         public ContactData(string firstName)
         {
-            this.firstName = firstName;
+            this.FirstName = firstName;
         }
 
         public ContactData(string firstName, string lastName)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
+            this.FirstName = firstName;
+            this.LastName = lastName;
         }
         public ContactData(string firstName, string lastName, string mobileNumber)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.mobileNumber = mobileNumber;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.MobileNumber = mobileNumber;
         }
         public bool Equals(ContactData other)
         {
