@@ -16,7 +16,7 @@ namespace addressbook_web_tests
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = ContactData.GetAll().Except(oldList).First();
 
-            app.Contacts.AddAddContactToGroup(contact, group);
+            app.Contacts.AddContactToGroup(contact, group);
 
             List<ContactData> newList = group.GetContacts();
             oldList.Add(contact);

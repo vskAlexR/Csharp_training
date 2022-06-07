@@ -41,7 +41,7 @@ namespace addressbook_web_tests
             driver.FindElement(By.LinkText("home page")).Click();
         }
 
-        public void OpenToHomePage()
+        public void OpenHomePage()
         {
             driver.FindElement(By.LinkText("home")).Click();
         }

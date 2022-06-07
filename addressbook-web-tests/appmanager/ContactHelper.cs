@@ -42,11 +42,11 @@ namespace addressbook_web_tests
         }
         public ContactHelper Modify(ContactData contact, ContactData contactEdit)
         {
-            manager.Navigator.OpenToHomePage();
+            manager.Navigator.OpenHomePage();
             InitContactModification(contact.Id);
             FillContactForm(contactEdit);
             SubmitContactModification();
-            manager.Navigator.OpenToHomePage();
+            manager.Navigator.OpenHomePage();
             return this;
         }
 
@@ -56,7 +56,7 @@ namespace addressbook_web_tests
             SelectContact(id);
             RemoveContact();
             CloseContactAlert();
-            manager.Navigator.OpenToHomePage();
+            manager.Navigator.OpenHomePage();
             return this;
         }
         public ContactHelper Remove(ContactData contact)
@@ -65,7 +65,7 @@ namespace addressbook_web_tests
             SelectContact(contact.Id);
             RemoveContact();
             CloseContactAlert();
-            manager.Navigator.OpenToHomePage();
+            manager.Navigator.OpenHomePage();
             return this;
         }
 
@@ -242,7 +242,7 @@ namespace addressbook_web_tests
         }
         public ContactData GetContactInformationFromDetails(int id)
         {
-            manager.Navigator.OpenToHomePage();
+            manager.Navigator.OpenHomePage();
             OpenContactDetails(id);
             var rows = driver.FindElement(By.Id("content")).Text;
 
@@ -257,9 +257,9 @@ namespace addressbook_web_tests
             };
 
         }
-        public void AddAddContactToGroup(ContactData contact, GroupData group)
+        public void AddContactToGroup(ContactData contact, GroupData group)
         {
-            manager.Navigator.OpenToHomePage();
+            manager.Navigator.OpenHomePage();
             ClearGroupFilter();
             SelectContactById(contact.Id);
             SelectGroupToAdd(group.Name);
