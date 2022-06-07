@@ -68,6 +68,15 @@ namespace addressbook_web_tests
             manager.Navigator.OpenHomePage();
             return this;
         }
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
+            RemoveContact();
+            CloseContactAlert();
+            manager.Navigator.OpenToHomePage();
+            return this;
+        }
 
         public ContactHelper InitContactCreation()
         {
