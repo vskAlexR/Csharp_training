@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using LinqToDB.Mapping;
+
 
 
 namespace addressbook_web_tests
 {
+    [Table(Name = "addressbook")]
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstName;
@@ -68,10 +71,13 @@ namespace addressbook_web_tests
             return this.ToString().CompareTo(other.ToString());
         }
 
+        [Column(Name = "id"), PrimaryKey]
+        public string Id { get; set; }
+        [Column(Name = "firstname")]
         public string FirstName { get; set; }
+        [Column(Name = "lastname")]
         public string LastName { get; set; }
         public string MobileNumber { get; set; }
-        public string Id { get; set; }
         public string Address { get; set; }
         public string MobilePhone { get; set; }
         public string HomePhone { get; set; }
@@ -83,10 +89,10 @@ namespace addressbook_web_tests
         public string Title { get; set; }
         public string Company { get; set; }
         public string Home { get; set; }
-
         public string Mobile { get; set; }
-
         public string Work { get; set; }
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
 
 
         public string AllPhones
@@ -213,6 +219,13 @@ namespace addressbook_web_tests
             set
             {
                 fullName = value;
+            }
+        }
+        public static List<ContactData> GetAll()
+        {
+            using (AddresBookDB db = new AddresBookDB())
+            {
+                return (from c in db.contacts.Where(x => x.Deprecated == "00.00.0000 0:00:00") select c).ToList();
             }
         }
     }
