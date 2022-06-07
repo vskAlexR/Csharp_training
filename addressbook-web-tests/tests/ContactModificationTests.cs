@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class ContactModificationTests : AuthTestBase
+    public class ContactModificationTests : ContactTestBase
 
     {
         [Test]
@@ -24,19 +24,20 @@ namespace addressbook_web_tests
             newData.LastName = "bbba";
             newData.MobileNumber = "7778";
 
-            List<ContactData> oldContacts = app.Contacts.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeModified = oldContacts[0];
 
             if (app.Contacts.IsContactExist(0))
             {
-                app.Contacts.Modify(0, newData);
+                app.Contacts.Modify(toBeModified, newData);
             }
             else
             {
                 app.Contacts.Create(contact);
-                app.Contacts.Modify(0, newData);
+                app.Contacts.Modify(toBeModified, newData);
             }
 
-            List<ContactData> newContacts = app.Contacts.GetContactList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts[0].FirstName = newData.FirstName;
             oldContacts[0].LastName = newData.LastName;
             oldContacts.Sort();

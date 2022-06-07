@@ -40,11 +40,29 @@ namespace addressbook_web_tests
             manager.Navigator.ReturnToHomePage();
             return this;
         }
+        public ContactHelper Modify(ContactData contact, ContactData contactEdit)
+        {
+            manager.Navigator.OpenToHomePage();
+            InitContactModification(contact.Id);
+            FillContactForm(contactEdit);
+            SubmitContactModification();
+            manager.Navigator.OpenToHomePage();
+            return this;
+        }
 
         public ContactHelper Remove(int id)
         {
             manager.Navigator.GoToHomePage();
             SelectContact(id);
+            RemoveContact();
+            CloseContactAlert();
+            manager.Navigator.OpenToHomePage();
+            return this;
+        }
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
             RemoveContact();
             CloseContactAlert();
             manager.Navigator.OpenToHomePage();
@@ -95,10 +113,20 @@ namespace addressbook_web_tests
                 .FindElement(By.TagName("a")).Click();
             return this;
         }
+        public ContactHelper InitContactModification(string id)
+        {
+            driver.FindElement(By.XPath("//a[@href='edit.php?id=" + id + "']")).Click();
+            return this;
+        }
 
         public ContactHelper SelectContact(int id)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + id+1 + "]")).Click();
+            return this;
+        }
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + id + 1 + "]")).Click();
             return this;
         }
 
