@@ -225,7 +225,7 @@ namespace addressbook_web_tests
         {
             using (AddresBookDB db = new AddresBookDB())
             {
-                return (from c in db.contacts.Where(x => x.Deprecated == "00.00.0000 0:00:00") select c).ToList();
+                return (from c in db.contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
             }
         }
     }

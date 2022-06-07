@@ -37,7 +37,16 @@ namespace addressbook_web_tests
 
             return this;
         }
-
+        public GroupHelper Modify(GroupData group, GroupData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroup(group.Id);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
 
 
         public GroupHelper Remove(int p)

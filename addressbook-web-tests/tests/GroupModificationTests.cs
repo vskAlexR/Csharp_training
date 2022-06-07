@@ -25,7 +25,7 @@ namespace addressbook_web_tests
             newData.Header = "yyy";
             newData.Footer = "qqq";
 
-            List<GroupData> oldGroups = app.Groups.GetGroupLists();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             if (app.Groups.IsGroupExist(0))
             {
@@ -36,7 +36,7 @@ namespace addressbook_web_tests
                 app.Groups.Create(group);
                 app.Groups.Modify(0, newData);
             }
-            List<GroupData> newGroups = app.Groups.GetGroupLists();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups[0].Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
