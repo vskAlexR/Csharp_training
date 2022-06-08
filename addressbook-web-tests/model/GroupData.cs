@@ -80,7 +80,7 @@ namespace addressbook_web_tests
             using (AddresBookDB db = new AddresBookDB())
             {
                 return (from c in db.contacts
-                        from gcr in db.GCR.Where(p => p.GroupId == Id && p.ContactId == c.Id && c.Deprecated == "00.00.0000 0:00:00")
+                        from gcr in db.GCR.Where(p => p.GroupId == Id && p.ContactId == c.Id && c.Deprecated == "0000-00-00 00:00:00")
                         select c).Distinct().ToList();
             }
         }

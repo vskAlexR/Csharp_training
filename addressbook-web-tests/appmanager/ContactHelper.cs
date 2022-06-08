@@ -68,15 +68,7 @@ namespace addressbook_web_tests
             manager.Navigator.OpenHomePage();
             return this;
         }
-        public ContactHelper Remove(ContactData contact)
-        {
-            manager.Navigator.GoToHomePage();
-            SelectContact(contact.Id);
-            RemoveContact();
-            CloseContactAlert();
-            manager.Navigator.OpenToHomePage();
-            return this;
-        }
+
 
         public ContactHelper InitContactCreation()
         {
@@ -273,7 +265,7 @@ namespace addressbook_web_tests
             SelectContactById(contact.Id);
             SelectGroupToAdd(group.Name);
             CommitAddingContactToGroup();
-            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
         private void SelectContactById(string contactid)
         {
@@ -293,6 +285,21 @@ namespace addressbook_web_tests
         private void ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            SelectGroupWithContacts(group.Name);
+            SelectContactById(contact.Id);
+            CommitRemoveContactFromGroup();
+        }
+        private void CommitRemoveContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+        private void SelectGroupWithContacts(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
         }
 
     }
