@@ -69,6 +69,8 @@ namespace addressbook_web_tests
         }
 
         public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+
         public string LastName { get; set; }
         public string MobileNumber { get; set; }
         public string Id { get; set; }
@@ -76,6 +78,8 @@ namespace addressbook_web_tests
         public string MobilePhone { get; set; }
         public string HomePhone { get; set; }
         public string WorkPhone { get; set; }
+        public string Fax { get; set; }
+
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
@@ -87,6 +91,8 @@ namespace addressbook_web_tests
         public string Mobile { get; set; }
 
         public string Work { get; set; }
+        public string HomePage { get; set; }
+
 
 
         public string AllPhones
@@ -107,6 +113,16 @@ namespace addressbook_web_tests
                 allPhones = value;
             }
         }
+        private string PhoneCleanUp(string phone)
+        {
+            if (!string.IsNullOrEmpty(phone))
+            {
+                if (phone == HomePhone) { phone = "H: " + HomePhone + "\r\n"; }
+                else if (phone == WorkPhone) { phone = "W: " + WorkPhone + "\r\n" + "\r\n"; }
+                else if (phone == MobilePhone) { phone = "M: " + MobilePhone + "\r\n"; }
+            }
+            return phone;
+        }
 
         private string CleanUp(string phone)
         {
@@ -126,7 +142,7 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return (ClenupEmail(Email) + ClenupEmail(Email2) + ClenupEmail(Email3)).Trim();
+                    return (EmailCleanUp(Email) + EmailCleanUp(Email2) + EmailCleanUp(Email3)).Trim();
                 }
             }
             set
@@ -134,14 +150,15 @@ namespace addressbook_web_tests
                 allEmails = value;
             }
         }
-        private string ClenupEmail(string email)
+        private string EmailCleanUp(string email)
         {
             if (email == null || email == "")
             {
                 return "";
             }
-            return email.Replace(" ", "") + "\r\n";
+            return Regex.Replace(email, "[ ]", "") + "\r\n";
         }
+
         public string AllContactInfo
         {
             get
@@ -152,38 +169,36 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return FirstName + " " + LastName + "\r\n"
-                        + NickName + "\r\n"
-                        + Title + "\r\n"
-                        + Company + "\r\n"
-                        + Address + "\r\n\r\n"
-                        + "H: " + HomePhone + "\r\n"
-                        + "M: " + MobilePhone + "\r\n"
-                        + "W: " + WorkPhone + "\r\n"
-                        + Email + "\r\n"
-                        + Email2 + "\r\n"
-                        + Email3 + "\r\n";
+                    string fullName = FullName();
+                    string address = AddressCleanUp();
+                    string phones = PhoneCleanUp(HomePhone) + PhoneCleanUp(MobilePhone) + PhoneCleanUp(WorkPhone);
+                    return  fullName + address + phones + AllEmails;
+                   // return contactDetails;
                 }
             }
             set { allContactInfo = value; }
         }
 
-        public string FullName
+        public string FullName()
         {
-            get
+            if (FirstName != null && LastName != null)
             {
-                if (fullName != null)
-                {
-                    return fullName;
-                }
-                else
-                {
-                    return (firstName + " " + lastName).Trim();
-                }
+                return  fullName = (FirstName + " " + LastName + "\r\n");
             }
-            set
+            else
             {
-                fullName = value;
+                return fullName = (FirstName + LastName + "\r\n");
+            }
+        }
+        private string AddressCleanUp()
+        {
+            if (Address != null && Address != "")
+            {
+                return Address + "\r\n" + "\r\n";
+            }
+            else
+            {
+                return "\r\n";
             }
         }
     }

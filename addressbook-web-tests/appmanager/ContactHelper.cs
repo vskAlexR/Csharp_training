@@ -183,7 +183,7 @@ namespace addressbook_web_tests
             string company = driver.FindElement(By.Name("company")).GetAttribute("value");
             string title = driver.FindElement(By.Name("title")).GetAttribute("value");
 
-            return new ContactData(firstName, lastName, mobilePhone)
+            return new ContactData()
             {
                 FirstName = firstName,
                 LastName = lastName,
@@ -194,9 +194,6 @@ namespace addressbook_web_tests
                 Email = email,
                 Email2 = email2,
                 Email3 = email3,
-                NickName = nickName,
-                Title = title,
-                Company = company
             };
         }
         public int GetNumberOfSearchResults()
@@ -218,15 +215,16 @@ namespace addressbook_web_tests
             OpenContactDetails(id);
             var rows = driver.FindElement(By.Id("content")).Text;
 
-            string allContactInfo = driver.FindElement(By.Id("content")).GetAttribute("innerText").Replace("\r\n\r\n\r\n\r\n", "").
-               Replace("h: ", "").Replace("m: ", "").Replace("w: ", "").Trim();
+            //string allContactInfo = driver.FindElement(By.Id("content")).GetAttribute("innerText").Replace("\r\n\r\n\r\n\r\n", "").
+            //  Replace("h: ", "").Replace("m: ", "").Replace("w: ", "").Trim();
+            string allContactInfo = driver.FindElement(By.XPath("//div[@id='content']")).Text;
 
-            string fullName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text;
+            //string fullName = driver.FindElement(By.Id("content")).FindElement(By.TagName("b")).Text;
 
             return new ContactData(allContactInfo)
             {
                 AllContactInfo = allContactInfo,
-                FullName = fullName,
+               // FullName = fullName,
             };
 
         }
