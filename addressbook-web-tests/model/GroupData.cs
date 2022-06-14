@@ -71,9 +71,9 @@ namespace addressbook_web_tests
         {
             if (Object.ReferenceEquals(other, null))
             {
-                return Name.CompareTo(other.Name);
+                return 1;
             }
-            return 1;
+            return Name.CompareTo(other.Name); ;
         }
         public List<ContactData> GetContacts()
         {

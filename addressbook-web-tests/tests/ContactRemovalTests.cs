@@ -17,7 +17,7 @@ namespace addressbook_web_tests
             app.Contacts.CreateIfContactNotExist(contact);
 
             List<ContactData> oldContacts = ContactData.GetAll();
-            ContactData toBeRemoved = oldContacts[0];
+            ContactData toBeRemoved = oldContacts[1];
 
 
             if (app.Contacts.IsContactExist(0))

@@ -89,14 +89,14 @@ namespace addressbook_web_tests
             driver.FindElement(By.LinkText("groups")).Click();
             return this;
         }
-        public GroupHelper SelectGroup(int index)
+        public GroupHelper SelectGroup(int id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (id + 1) + "]")).Click();
             return this;
         }
-        public GroupHelper SelectGroup(string index)
+        public GroupHelper SelectGroup(string id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index + 1) + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             return this;
         }
         public GroupHelper RemoveGroup()
