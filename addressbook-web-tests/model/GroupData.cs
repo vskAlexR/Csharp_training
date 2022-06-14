@@ -16,7 +16,7 @@ namespace addressbook_web_tests
         }
         public GroupData(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
 
         public GroupData(string name, string header, string footer)

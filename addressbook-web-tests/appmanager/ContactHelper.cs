@@ -121,6 +121,26 @@ namespace addressbook_web_tests
             }
             return contacts;
         }
+        public List<ContactData> GetContactsLists()
+        {
+            {
+                List<ContactData> contact_list = new List<ContactData>();
+                List<IWebElement> contacts = new List<IWebElement>();
+
+                manager.Navigator.GoToHomePage();
+
+                ICollection<IWebElement> records = driver.FindElements(By.Name("entry"));
+
+
+                    foreach (IWebElement record in records)
+                    {
+                        contacts = record.FindElements((By.TagName("td"))).ToList();
+                        contact_list.Add(new ContactData(contacts[2].Text, contacts[1].Text));
+                    }
+
+                return contact_list;
+            }
+        }
 
     }
 }

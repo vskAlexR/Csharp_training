@@ -18,15 +18,7 @@ namespace addressbook_web_tests
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
-            if (app.Contacts.IsContactExist(0))
-            {
-                app.Contacts.Remove(0);
-            }
-            else
-            {
-                app.Contacts.Create(contact);
-                app.Contacts.Remove(0);
-            }
+            app.Contacts.Remove(0);
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.RemoveAt(0);

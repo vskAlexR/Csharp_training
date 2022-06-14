@@ -18,13 +18,13 @@ namespace addressbook_web_tests
         }
         public ContactData(string firstName)
         {
-            this.firstName = firstName;
+            this.FirstName = firstName;
         }
 
         public ContactData(string firstName, string lastName)
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
+            this.FirstName = firstName;
+            this.LastName = lastName;
         }
         public bool Equals(ContactData other)
         {
@@ -41,7 +41,7 @@ namespace addressbook_web_tests
 
         public override int GetHashCode()
         {
-            return (this.ToString()).GetHashCode();
+            return FirstName.GetHashCode() + LastName.GetHashCode();
         }
 
         public override string ToString()
@@ -55,11 +55,12 @@ namespace addressbook_web_tests
             {
                 return 1;
             }
-            if (this.LastName != other.LastName)
-            {
-                return LastName.CompareTo(other.LastName);
-            }
             return FirstName.CompareTo(other.FirstName);
+            if (Object.ReferenceEquals(LastName, other.LastName))
+            {
+                return FirstName.CompareTo(other.FirstName);
+            }
+            return LastName.CompareTo(other.LastName);
         }
 
         public string FirstName
