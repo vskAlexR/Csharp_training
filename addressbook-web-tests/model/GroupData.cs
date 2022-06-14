@@ -20,14 +20,14 @@ namespace addressbook_web_tests
 
         public GroupData(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
 
         public GroupData(string name, string header, string footer)
         {
-            this.name = name;
-            this.header = header;
-            this.footer = footer;
+            this.Name = name;
+            this.Header = header;
+            this.Footer = footer;
         }
         [Column(Name = "group_name")]
         public string Name { get; set; }

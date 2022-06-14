@@ -127,7 +127,7 @@ namespace addressbook_web_tests
         }
         public ContactHelper SelectContact(string id)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + id + 1 + "]")).Click();
+            driver.FindElement(By.XPath($"(//input[@name='selected[]' and @value='{id}'])")).Click();
             return this;
         }
 
@@ -147,6 +147,13 @@ namespace addressbook_web_tests
             if (!IsElementPresent(By.XPath("//img[@alt='Edit']")))
             {
                 Create(contact);
+            }
+        }
+        public void CreateIfContactNotExist(string contact = "contactRemoveTest")
+        {
+            if (!IsElementPresent(By.XPath("//img[@alt='Edit']")))
+            {
+                Create(new ContactData(contact));
             }
         }
         public bool IsContactExist(int id)
@@ -261,8 +268,9 @@ namespace addressbook_web_tests
         public void AddContactToGroup(ContactData contact, GroupData group)
         {
             manager.Navigator.OpenHomePage();
-            ClearGroupFilter();
-            SelectContactById(contact.Id);
+           // ClearGroupFilter();
+            SelectNoneGroup();
+            SelectContact(contact.Id);
             SelectGroupToAdd(group.Name);
             CommitAddingContactToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(30)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
@@ -290,7 +298,7 @@ namespace addressbook_web_tests
         {
             manager.Navigator.OpenHomePage();
             SelectGroupWithContacts(group.Name);
-            SelectContactById(contact.Id);
+            SelectContact(contact.Id);
             CommitRemoveContactFromGroup();
         }
         private void CommitRemoveContactFromGroup()
@@ -300,6 +308,10 @@ namespace addressbook_web_tests
         private void SelectGroupWithContacts(string name)
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+        private void SelectNoneGroup()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[none]");
         }
 
     }

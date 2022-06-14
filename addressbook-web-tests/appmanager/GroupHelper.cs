@@ -125,6 +125,13 @@ namespace addressbook_web_tests
                 Create(group);
             }
         }
+        public void CreateIfGroupNotExist(string groupName = "removeTestGroup")
+        {
+            if (!IsElementPresent(By.XPath("//input[@name='selected[]")))
+            {
+                Create(new GroupData(groupName));
+            }
+        }
         public List<GroupData> GetGroupLists()
         {
             if (groupCache == null)
@@ -166,5 +173,6 @@ namespace addressbook_web_tests
         {
             return IsElementPresent(By.XPath("//div[@id='content']/form/span[" + ( id + 1 ) + "]/input"));
         }
+
     }
 }
