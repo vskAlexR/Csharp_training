@@ -51,16 +51,15 @@ namespace addressbook_web_tests
 
         public int CompareTo(ContactData other)
         {
-            if (Object.ReferenceEquals(other, null))
+            if (object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            return FirstName.CompareTo(other.FirstName);
-            if (Object.ReferenceEquals(LastName, other.LastName))
+            if (this.LastName != other.LastName)
             {
-                return FirstName.CompareTo(other.FirstName);
+                return LastName.CompareTo(other.LastName);
             }
-            return LastName.CompareTo(other.LastName);
+            return FirstName.CompareTo(other.FirstName);
         }
 
         public string FirstName
