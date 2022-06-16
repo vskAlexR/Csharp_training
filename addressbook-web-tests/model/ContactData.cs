@@ -105,7 +105,7 @@ namespace addressbook_web_tests
                 }
                 else
                 {
-                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                    return CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone);
                 }
             }
             set
@@ -118,7 +118,7 @@ namespace addressbook_web_tests
             if (!string.IsNullOrEmpty(phone))
             {
                 if (phone == HomePhone) { phone = "H: " + HomePhone + "\r\n"; }
-                else if (phone == WorkPhone) { phone = "W: " + WorkPhone + "\r\n" + "\r\n"; }
+                else if (phone == WorkPhone) { phone = "W: " + WorkPhone + "\r\n"; }
                 else if (phone == MobilePhone) { phone = "M: " + MobilePhone + "\r\n"; }
             }
             return phone;
@@ -167,13 +167,50 @@ namespace addressbook_web_tests
                 {
                     return allContactInfo;
                 }
-                else
+                else 
                 {
                     string fullName = FullName();
                     string address = AddressCleanUp();
-                    string phones = PhoneCleanUp(HomePhone) + PhoneCleanUp(MobilePhone) + PhoneCleanUp(WorkPhone);
-                    return  fullName + address + phones + AllEmails;
-                   // return contactDetails;
+                    string phones = (PhoneCleanUp(HomePhone) + PhoneCleanUp(MobilePhone) + PhoneCleanUp(WorkPhone)).Trim("\r\n".ToCharArray());
+                    if (address != "\r\n")
+                    {
+                        if (phones != "" && AllEmails != "")
+                        {
+                            return fullName + address + "\r\n\r\n" + phones + "\r\n\r\n" + AllEmails;
+                        }
+                        else if (phones != "")
+                        {
+                            return fullName + address + "\r\n\r\n" + phones + AllEmails;
+                        }
+                        else if (AllEmails != "")
+                        {
+                            return fullName + address + "\r\n\r\n" + phones + AllEmails;
+                        }
+                        else
+                        {
+                            return fullName + address + phones + AllEmails;
+                        }
+                    }
+                    else
+                    {
+                        if (phones != "" && AllEmails != "")
+                        {
+                            return fullName + address + phones + "\r\n\r\n" + AllEmails;
+                        }
+                        else if (phones != "")
+                        {
+                            return fullName + address + phones + AllEmails;
+                        }
+                        else if (AllEmails != "")
+                        {
+                            return fullName + address + phones + AllEmails;
+                        }
+                        else
+                        {
+                            return fullName + address + phones + AllEmails;
+                        }
+                    }
+                    // return contactDetails;
                 }
             }
             set { allContactInfo = value; }
@@ -194,7 +231,7 @@ namespace addressbook_web_tests
         {
             if (Address != null && Address != "")
             {
-                return Address + "\r\n" + "\r\n";
+                return Address;
             }
             else
             {
